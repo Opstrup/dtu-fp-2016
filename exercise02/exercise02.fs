@@ -85,3 +85,26 @@ let firstPrimes m = primeNumbersTo' (0, m, [])
     
 firstPrimes 50
     |> printf "Prime numbers to 50 is: %A"
+
+// Merge sort
+// let rec mergesort = function
+//     | list when list.Length <= 1 -> list
+//     | list ->
+//         let l1 = 
+
+let rec merge = function
+    | (leftSide, rightSide, result) when leftSide.Length <> 0 && rightSide.Length <> 0 ->
+        if head::leftSide <= head::rightSide then
+            result@[head::leftSide]
+            leftSide = leftSide::tail
+        else
+            result@[head::rightSide]
+            rightSide = rightSide::tail
+    | (leftSide, rightSide, result) when leftSide.Length <> 0 ->
+        result@[head::leftSide]
+        leftSide = leftSide::tail
+    | (leftSide, rightSide, result) when rightSide.Length <> 0 ->
+        result@[head::rightSide]
+        rightSide = rightSide::tail
+    | _ -> Result
+
