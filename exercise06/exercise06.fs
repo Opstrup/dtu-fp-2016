@@ -13,10 +13,10 @@ type AExp =                           (* Arithmetical expressions *)
 type BExp =                          (* boolean expressions      *)
           | TT                       (* true                     *)
           | FF                       (* false                    *)
-          | Eq of ...                (* equality                 *)
-          | Lt of ...                (* less than                *)
-          | Neg of ...               (* negation                 *)
-          | Con of ...        ;;     (* conjunction              *)
+          | Eq of AExp * AExp        (* equality                 *)
+          | Lt of AExp * AExp        (* less than                *)
+          | Neg of BExp              (* negation                 *)
+          | Con of BExp * BExp       (* conjunction              *)
 
 type Stm  =                            (* statements             *)
           | Ass of string * AExp       (* assignment             *)
@@ -44,12 +44,12 @@ let rec A a s      =
 (* B: BExp -> State -> bool                  *)
 let rec B b s =
    match b with 
-    | TT          -> true
-    | FF          -> false
-    | Eq(...
-    | Lt(... 
-    | Neg ...
-    | Con(... ;;
+    | TT            -> true
+    | FF            -> false
+    | Eq(b1, b2)    -> b1 = b2
+    | Lt(b1, b2)    -> b1 < b2 
+    | Neg(b)        -> true
+    | Con(b1, b2)   -> b1 && b2;;
 
 (* I: Stm -> State -> State                          *)
 let rec I stm s =
