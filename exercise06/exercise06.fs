@@ -46,9 +46,9 @@ let rec B b s =
    match b with 
     | TT            -> true
     | FF            -> false
-    | Eq(b1, b2)    -> b1 = b2
-    | Lt(b1, b2)    -> b1 < b2 
-    | Neg(b)        -> true
+    | Eq(b1, b2)    -> A b1 s = A b2 s
+    | Lt(b1, b2)    -> A b1 s < A b2 s 
+    | Neg(b)        -> not b
     | Con(b1, b2)   -> b1 && b2;;
 
 (* I: Stm -> State -> State                          *)
