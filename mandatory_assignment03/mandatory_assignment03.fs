@@ -56,6 +56,12 @@ let rec allDescriptions = function
         Set.union sSet fSet
     | _ -> set []
 
+let pred s = 
+    s = "B" || s = "C"
+
+let probabilityOf t =
+    Set.fold (fun acc (_, p, s) -> if pred s then p + acc else acc ) 0.0 (allDescriptions t) 
+
 (*-------- Test -------*)
 let testTree = Branch(">2",0.67 , Branch(">3",0.5, Leaf "A", Leaf "B") 
                                 , Branch(">3",0.5, Leaf "C", Leaf "D"))
@@ -88,4 +94,16 @@ descriptionOf outcomeTest2 testTree
     |> printf "The result is %A : the result should be ([(F, '>2'); (S, '>3')], 0.335, 'B')\n"
 
 allDescriptions testTree
-    |> printf "The description of the whole tree is: %A"
+    |> printf "The description of the whole tree is: %A\n"
+
+pred "A"
+    |> printf "The result of the predicet is %b : the result should be false \n"
+
+pred "C"
+    |> printf "The result of the predicet is %b : the result should be true \n"
+
+pred "B"
+    |> printf "The result of the predicet is %b : the result should be true \n"
+
+probabilityOf testTree
+    |> printf "Test of probability calculation on B and C: %f"
