@@ -1,5 +1,6 @@
 // Summer 2015
 
+// Problem 1
 let repeat (s: string) (n: int) =
     if n = 0 then "" else
     String.replicate n s
@@ -16,11 +17,25 @@ let f (s1: string) (s2: string) (n: int) =
 
 let viz (m: int) (n: int) =
     f (repeat "XO" m) (repeat "OX" m) n
-         
 
+// Problem 2
+let rec mixMap = function
+    | ([], l2, acc) -> acc
+    | (l1, [], acc) -> acc
+    | (h1::l1, h2::l2, acc) ->  mixMap (l1, l2, acc @ [(h1, h2)]) 
+
+let mixMapZip x y = 
+    Seq.zip x y |> List.ofSeq
+
+let rec unmixMap = function
+    | ([], acc) -> acc
+    | ((x, y) :: l1, (acc1, acc2)) -> unmixMap (l1, (acc1 @ [x], acc2 @ [y]))
+
+let unmixMapUnzip l =
+    List.unzip l
 
 (* ---- Test ---- *)
-printf "Exercise01\n"
+printf "Problem01\n"
 printf "Part 1\n"
 repeat "ab" 4 
     |> printf "%s"
@@ -34,4 +49,19 @@ printf "\n"
 printf "Part 3\n"
 viz 4 5
     |> printf "%s"
-        
+
+printf "\n"
+printf "Problem02\n"
+printf "Part 1 - rec\n"
+mixMap ([1; 2; 3; 4], [5; 6; 7; 8], [])
+    |> printf "%A"
+
+printf "\n"
+printf "Part 1 - zip\n"
+mixMap ([1; 2; 3; 4], [5; 6; 7; 8], [])
+    |> printf "%A"
+
+printf "\n"
+printf "Part 2 - unzip\n"
+unmixMap ([(1, 2);(3, 4);(5, 6)], ([],[]))
+    |> printf "%A"
