@@ -34,6 +34,19 @@ let rec unmixMap = function
 let unmixMapUnzip l =
     List.unzip l
 
+// Problem 3
+
+type Tree<'a> = Lf | Br of Tree<'a> * 'a * Tree<'a>
+
+let t = Br(Br(Br(Lf,1,Lf),2,Br(Lf,3,Lf)),4,Br(Br(Lf,5,Lf),6,Br(Lf,7,Lf)))
+
+let rec reflect = function
+    | Lf -> Lf
+    | Br(l, x, r) -> Br(reflect r, x, reflect l)
+
+// let rec accumulate t acc = function
+//     | (Lf, value, Lf) -> 
+
 (* ---- Test ---- *)
 printf "Problem01\n"
 printf "Part 1\n"
