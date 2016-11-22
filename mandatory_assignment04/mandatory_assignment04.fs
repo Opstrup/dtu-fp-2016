@@ -31,13 +31,22 @@ let propositionConverter = function
     | P _ as x -> x
 
 // Part 3.
+let literal = function
+    | Con (x, Dis (y, z)) -> Dis(Con(x, y), Con(x, z))
+    | Con (Dis (y, z), x) -> Dis(Con(x, y), Con(x, z))
+    | x -> x
+
+// Part 4.
 
 // ----------------------- TESTS ----------------------- // 
 let atomA = P "a"
 let atomB = P "b"
+let atomC = P "c"
 let negA = Neg atomA
 let AandB = Con(atomA, atomB)
 let AorB = Dis(atomA, atomB)
+let CandAorB = Con(atomC, AorB)
+let AorBandC = Con(AorB, atomC)
 let notAandB = Neg AandB
 let notAorB = Neg AorB
 
@@ -48,4 +57,10 @@ propositionConverter notAandB
     |> printf "The result is %A \n"
 
 propositionConverter notAorB
+    |> printf "The result is %A \n"
+
+literal CandAorB
+    |> printf "The result is %A \n"
+
+literal AorBandC
     |> printf "The result is %A \n"
