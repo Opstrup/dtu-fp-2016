@@ -85,8 +85,8 @@ let iff = function
 
 // Part 8.
 let rec badProp = function
-    | (0, props) -> props
-    | (n, props) -> badProp (n-1, Set.add (Con (P "A", P "C")) props) 
+    | (0, prop) -> prop
+    | (n, prop) -> badProp (n-1, Con (Con (Dis (P "A", P "B" ), Dis (P "A", P "B" )), prop))
 
 // ----------------------- TESTS ----------------------- // 
 let atomA = P "a"
@@ -160,5 +160,8 @@ iff (atomA, negA)
 iff (negA, negA)
     |> printf "The result is %A \n"
 
-badProp (5, Set.empty)
+badProp (2, Con (Dis (P "A", P "B" ), Dis (P "A", P "B" )))
     |> printf "The result of badprop is %A \n"
+
+toDNFsets (badProp (2, Con (Dis (P "A", P "B" ), Dis (P "A", P "B" ))))
+    |> printfn "The result of toDNFsets with badProp is %A \n"
